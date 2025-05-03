@@ -1,6 +1,9 @@
 ### EX7 Implementation of Link Analysis using HITS Algorithm
-### DATE: 
+
+### DATE: 03/05/2025
+
 ### AIM: To implement Link Analysis using HITS Algorithm in Python.
+
 ### Description:
 <div align = "justify">
 The HITS (Hyperlink-Induced Topic Search) algorithm is a link analysis algorithm used to rank web pages. It identifies authority and hub pages 
@@ -41,42 +44,31 @@ def hits_algorithm(adjacency_matrix, max_iterations=100, tol=1.0e-6):
     num_nodes = len(adjacency_matrix)
     authority_scores = np.ones(num_nodes)
     hub_scores = np.ones(num_nodes)
-    
-    for i in range(max_iterations):
-        # Authority update
 
-             /*WRITE YOUR CODE HERE
-        
-        # Hub update
-
-             /*WRITE YOUR CODE HERE
-        
-        # Check convergence
-
-             /*WRITE YOUR CODE HERE
-        
+    for _ in range(max_iterations):
+        old_authority_scores = authority_scores.copy()
+        old_hub_scores = hub_scores.copy()
+        authority_scores = np.dot(adjacency_matrix.T, hub_scores)
+        hub_scores = np.dot(adjacency_matrix, authority_scores)
+        authority_norm = np.linalg.norm(authority_scores)
+        hub_norm = np.linalg.norm(hub_scores)
+        authority_scores /= authority_norm if authority_norm != 0 else 1
+        hub_scores /= hub_norm if hub_norm != 0 else 1
+        authority_diff = np.linalg.norm(authority_scores - old_authority_scores)
+        hub_diff = np.linalg.norm(hub_scores - old_hub_scores)
         if authority_diff < tol and hub_diff < tol:
             break
-        
-        authority_scores = new_authority_scores
-        hub_scores = new_hub_scores
-    
     return authority_scores, hub_scores
 
-# Example adjacency matrix (replace this with your own data)
-# For simplicity, using a random adjacency matrix
-adj_matrix = np.array([
-    [0, 1, 1],
+adj_matrix = np.array
+([[0, 1, 1],
     [1, 0, 0],
-    [1, 0, 0]
-])
+    [1, 0, 0]])
 
-# Run HITS algorithm
 authority, hub = hits_algorithm(adj_matrix)
+
 for i in range(len(authority)):
     print(f"Node {i}: Authority Score = {authority[i]:.4f}, Hub Score = {hub[i]:.4f}")
-
-# bar chart of authority vs hub scores
 
 nodes = np.arange(len(authority))
 bar_width = 0.35
@@ -94,4 +86,7 @@ plt.show()
 
 ### Output:
 
+![ex7op1](https://github.com/user-attachments/assets/f39220c7-8baa-43a1-8678-6327047de221)
+
 ### Result:
+The program successfully implements the HITS algorithm, calculates authority and hub scores for each node in the graph, and visualizes them using a bar chart.
